@@ -6,10 +6,10 @@ import axios from "axios";
 import logger from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 
-//======== SAGE YIELD FOR ADDING CATA || MAYBE DO THIS LATER ======== 
+//======== SAGA YIELD FOR ADDING CATA || MAYBE DO THIS LATER ======== 
 //   yield takeEvery("ADD_CATA", addCatagoriesSaga);
 
-//======== MAIN SAGE ROOT =========
+//======== MAIN SAGA ROOT =========
 function* rootSaga() {
   yield takeEvery("FETCH_CATA", fetchCatagoriesSaga);
   yield takeEvery("FETCH_FAV", fetchFavoritesSaga);
@@ -25,7 +25,6 @@ function* fetchCatagoriesSaga(action) {
     console.error(err);
   }
 }
-
 
 //======== ADD TO CATAGORIES || MAYBE DO THIS LATER ======== 
 // function* addCatagoriesSaga(action) {
@@ -84,11 +83,22 @@ const favoriteReducer = (state = [], action) => {
     }
   };
 
+
+const resultReducer = (state = [], action) => {
+    switch (action.type) {
+        case "SET_RESULT":
+          return action.payload;
+        default:
+          return state;
+    }
+}
+
 // ======== STORE CREATOR ======== 
 const store = createStore(
   combineReducers({
     catagoryReducer,
-    favoriteReducer 
+    favoriteReducer,
+    resultReducer
   }),
   // ---- Logger and sageMiddleware ----
   applyMiddleware(sagaMiddleware, logger)
