@@ -83,7 +83,7 @@ const favoriteReducer = (state = [], action) => {
     }
   };
 
-
+// ======== RESULT REDUCER =========
 const resultReducer = (state = [], action) => {
     switch (action.type) {
         case "SET_RESULT":

@@ -5,12 +5,26 @@ const router = express.Router();
 
 // return all favorite images
 router.get('/', (req, res) => {
-  res.sendStatus(200);
+  const queryText = `SELECT "necessary_info" AS "gif" FROM "favorites";`;
+  pool.query(queryText)
+    .then((result) => { res.send(result.rows).status(200); })
+    .catch((err) => {
+      console.log('Error in GET /api/favorites', err);
+      res.sendStatus(500);
+    });
 });
 
 // add a new favorite
 router.post('/', (req, res) => {
-  res.sendStatus(201);
+  const queryText = `
+    INSERT INTO "favorites" ("necessary_info")
+          VALUES ($1);`;
+  pool.query(queryText, [req.body.gif])
+    .then((result) => { res.sendStatus(201); })
+    .catch((err) => {
+      console.log('Error in POST /api/favorites', err);
+      res.sendStatus(500);
+    });
 });
 
 // update a favorite's associated category

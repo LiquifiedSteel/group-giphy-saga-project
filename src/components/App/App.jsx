@@ -19,7 +19,6 @@ function App() {
       <Route path='/' exact>
       <Search />
       </Route>
-
       <Route path='/favorites' >
       <Favorites />
       </Route>
