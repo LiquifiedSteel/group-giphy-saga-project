@@ -6,6 +6,12 @@ CREATE TABLE "categories" (
   "name" VARCHAR (100) NOT NULL
 );
 
+CREATE TABLE "favorites" (
+	"id" SERIAL PRIMARY KEY,
+	"necessary_info" VARCHAR (260) NOT NULL,
+	"catagory_id" INTEGER
+);
+
 -- Default categories. You may change these. 🙂
 INSERT INTO "categories"
   ("name")
@@ -13,7 +19,7 @@ INSERT INTO "categories"
   ('wild'),
   ('uproarious'),
   ('poignant'),
-  ('felicitous'),
+  ('skibidi'),
   ('whimsical');
 
 -- Favorites table:
