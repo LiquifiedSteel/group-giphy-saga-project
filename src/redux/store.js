@@ -14,6 +14,7 @@ function* rootSaga() {
   yield takeEvery("FETCH_CATA", fetchCatagoriesSaga);
   yield takeEvery("FETCH_FAV", fetchFavoritesSaga);
   yield takeEvery("ADD_FAV", addFavoritesSaga);
+  //yield takeEvery('DELETE_GIF', deleteGifSaga);
 }
 
 //========  SET UP CATAGORIES ======== 
@@ -25,6 +26,15 @@ function* fetchCatagoriesSaga(action) {
     console.error(err);
   }
 }
+//========  DELETE GIF ======== 
+// function* deleteGifSaga(action) {
+//   try {
+//     const response = yield axios.delete(`/api/favorites${action.payload}`);
+//     yield put({ type: 'FETCH_FAV' });
+//   } catch (error) {
+//     console.log(`Error in DELTE saga`, error);
+//   }
+// }
 
 //======== ADD TO CATAGORIES || MAYBE DO THIS LATER ======== 
 // function* addCatagoriesSaga(action) {
