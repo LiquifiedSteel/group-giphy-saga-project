@@ -18,7 +18,7 @@ INSERT INTO "categories"
   VALUES
   ('wild'),
   ('uproarious'),
-  ('poignant'),
+  ('hilarious'),
   ('skibidi'),
   ('whimsical');
 

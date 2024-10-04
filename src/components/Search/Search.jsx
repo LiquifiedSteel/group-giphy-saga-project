@@ -3,6 +3,11 @@ import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+
+//====== MAIN FUNCTION FOR SEARCH ======
 
 export default function Search(){
     const [query, setQuery] = useState('');
@@ -19,6 +24,8 @@ export default function Search(){
         // console.log(gifURL)
     }
 
+    //====== FETCH GIFS AND POST TO PAGE AFTER SEARCH ======
+
     function fetchGifs() {
         axios({
             url: '/api/search',
@@ -32,22 +39,35 @@ export default function Search(){
       }
 // resultReducer
 
+    //====== USE EFFECT ======
+
     useEffect(() => {
         dispatch({type: 'FETCH_FAV'});
     }, [])
+
+    //====== STYLE FOR IMAGE ======
 
     const GifImage = styled.img`
     width: 300px;
     height: auto;
     border-radius: 8px;
-    padding-bottom: 4px;
-    padding-top: 4px;
+    margin-bottom: 4px;
+ margin-top: 4px;
+    box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.35);
+    border: solid 1px black;
+-webkit-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.35);
+-moz-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.35);
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   
   &:hover {
     transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.35);
+-webkit-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.35);
+-moz-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.35);
   }`;
+
+
+  //====== STYLE FOR BUTTONS ======
 
   const Button = styled.button`
   background-color: #ff4081;
@@ -58,6 +78,9 @@ export default function Search(){
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.35);
+-webkit-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.35);
+-moz-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.35);
   transition: background-color 0.3s ease, transform 0.2s ease;
 
   &:hover {
@@ -69,12 +92,16 @@ export default function Search(){
   }
 `;
 
+//====== STYLE FOR CONTAINER ======
+
 const SearchContainer = styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
 background-color: #f4f4f4;
 `;
+
+//====== STYLE FOR INPUT ======
 
 const SearchInput = styled.input`
 width: 300px;
@@ -89,6 +116,8 @@ transition: border-color 0.2s;
 }
 `;
 
+//====== STYLE FOR SEARCH BUTTON ======
+
 const SearchButton = styled.button`
 padding: 10px 20px;
 margin-left: 10px;
@@ -98,6 +127,9 @@ border: none;
 border-radius: 5px;
 font-size: 16px;
 cursor: pointer;
+box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.35);
+-webkit-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.35);
+-moz-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.35);
 transition: background-color 0.2s;
 
 &:hover {
@@ -109,6 +141,7 @@ transition: background-color 0.2s;
 }
 `;
 
+    //====== SEARCH RENDER ======
 
     return (
         <>
@@ -118,10 +151,11 @@ transition: background-color 0.2s;
                 <SearchButton type="submit" >Enter</SearchButton>
             </form>
         </div>
+        <div className="row">
 
         {gifItems.map(gif => {
             let display = false;
-            return (<div key={gif.id}>
+            return (<div key={gif.id} className="col-md-4">
             <GifImage src={gif.images.original.url} />
             {favs.map(fav => {
                 if (fav.gif === gif.images.original.url) {
@@ -131,6 +165,7 @@ transition: background-color 0.2s;
             {display ? <Button>🩷</Button> : <Button onClick={(event) => addFav(gif.images.original.url)}>🤍</Button>}
         </div>)
         })}
+        </div>
       </>  
     );
 
