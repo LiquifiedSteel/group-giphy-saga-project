@@ -11,7 +11,7 @@ router.post('/', (req, res) => {
     if (!searchQuery) {
         return res.status(400).send('Search not provided')
     }
-    axios.get(`http://api.giphy.com/v1/gifs/search?api_key=${process.env.GIPHY_API_KEY}&q=${searchQuery}&limit=15&rating=pg-13`).then((response) => {
+    axios.get(`http://api.giphy.com/v1/gifs/search?api_key=${process.env.GIPHY_API_KEY}&q=${searchQuery}&limit=15&rating=pg`).then((response) => {
         res.send(response.data);
         // console.log(response.data);
     }).catch( err => {

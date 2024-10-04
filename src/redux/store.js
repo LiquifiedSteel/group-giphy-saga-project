@@ -29,7 +29,7 @@ function* fetchCatagoriesSaga(action) {
 //======== ADD TO CATAGORIES || MAYBE DO THIS LATER ======== 
 // function* addCatagoriesSaga(action) {
 //   try {
-//     const response = yield axios.post("/api/catagories", action.payload);
+//     const response = yield axios.put("/api/favorites", action.payload);
 //     yield put({ type: "FETCH_CATA" });
 //   } catch (err) {
 //     console.error(err);
@@ -39,7 +39,7 @@ function* fetchCatagoriesSaga(action) {
 //======== SET UP FAVORITES ======== 
 function* fetchFavoritesSaga(action) {
     try {
-      const response = yield axios.get("/api/catagories");
+      const response = yield axios.get("/api/favorites");
       yield put({ type: "SET_FAV", payload: response.data });
     } catch (err) {
       console.error(err);
@@ -49,7 +49,8 @@ function* fetchFavoritesSaga(action) {
   // ======== ADD FAVORITES ======== 
   function* addFavoritesSaga(action) {
     try {
-      const response = yield axios.post("/api/catagories", action.payload);
+      console.log(action.payload);
+      yield axios.post("/api/favorites", action.payload);
       yield put({ type: "FETCH_FAV" });
     } catch (err) {
       console.error(err);

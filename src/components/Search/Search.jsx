@@ -6,6 +6,16 @@ export default function Search(){
     const [query, setQuery] = useState('');
     const dispatch = useDispatch();
     const gifItems = useSelector((store) => store.resultReducer);
+    const favs = useSelector(store => store.favoriteReducer);
+
+    const addFav = (gifURL) => {
+        console.log(favs[0]);
+        dispatch({
+            type: "ADD_FAV",
+            payload: {URL: gifURL}
+        })
+        // console.log(gifURL)
+    }
 
     function fetchGifs() {
         console.log(query)
@@ -16,11 +26,18 @@ export default function Search(){
         }).then(response => {
             dispatch({type: "SET_RESULT", payload: response.data.data});
             console.log(response.data.data);
+            console.log(favs);
         }).catch( err => {
             console.log(err);
         });
       }
 // resultReducer
+
+    useEffect(() => {
+        dispatch({type: 'FETCH_FAV'});
+        console.log(favs[0]);
+    }, [])
+
     return (
         <>
         <div>
@@ -33,7 +50,7 @@ export default function Search(){
         {gifItems.map(gif => (
         <div key={gif.id}>
             <img src={gif.images.original.url} />
-            <button>Butt</button>
+            {favs.includes({gif: gif.images.original.url}) ? (<button>🩷</button>) : (<button onClick={(event) => addFav(gif.images.original.url)}>🤍</button>)}
        </div>
     ))}
      

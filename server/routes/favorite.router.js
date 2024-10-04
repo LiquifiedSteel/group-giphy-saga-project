@@ -19,7 +19,7 @@ router.post('/', (req, res) => {
   const queryText = `
     INSERT INTO "favorites" ("necessary_info")
           VALUES ($1);`;
-  pool.query(queryText, [req.body.gif])
+  pool.query(queryText, [req.body.URL])
     .then((result) => { res.sendStatus(201); })
     .catch((err) => {
       console.log('Error in POST /api/favorites', err);
