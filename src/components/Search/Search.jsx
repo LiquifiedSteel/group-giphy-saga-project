@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-let display = false;
-
 export default function Search(){
     const [query, setQuery] = useState('');
     const dispatch = useDispatch();
@@ -114,15 +112,15 @@ transition: background-color 0.2s;
 
     return (
         <>
-        <SearchContainer>
+        <div>
             <form onSubmit={fetchGifs}>
                 <input type='text' value={query} onChange={() => setQuery(event.target.value)} placeholder='Search' />
                 <SearchButton type="submit" >Enter</SearchButton>
             </form>
-        </SearchContainer>
+        </div>
 
         {gifItems.map(gif => {
-            display = false;
+            let display = false;
             return (<div key={gif.id}>
             <GifImage src={gif.images.original.url} />
             {favs.map(fav => {
