@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container } from 'react-bootstrap';
@@ -10,9 +8,10 @@ import styled from '@emotion/styled';
 //====== MAIN FUNCTION FOR FAVORITES ======
 
 export default function Favorites(){
-   const [refresh, setRefresh] = useState(0);
-const favoriteList = useSelector((store) => store.favoriteReducer)
-   const dispatch = useDispatch();
+    const [refresh, setRefresh] = useState(0);
+    const favoriteList = useSelector((store) => store.favoriteReducer)
+    const dispatch = useDispatch();
+    const [sortCat, setSortCat] = useState(0);
 
    console.log('fave reducer', favoriteList)
    
@@ -96,46 +95,48 @@ const favoriteList = useSelector((store) => store.favoriteReducer)
 
 //====== FAVORITES RENDER ======
 
- return(
-   <Container>
-    <h1>Favorite Gifs</h1>
-
-    <div  className="favorites-container row">
-      {favoriteList.map((favorite) => (
-         <div key={favorite.id} className='favImages col-md-4'>
-            <GifImage
-         src={favorite.gif} />
-           <form 
-           //onChange={pickCategory}
-           >   
-    <Dropdown>
-
-        <DropDownTag value={favorite.category} onChange={(event) => {
-         setRefresh(refresh + 1)
-         dispatch({type: 'SET_CAT', payload:{id: favorite.id, type: event.target.value}})
-         dispatch({type: 'FETCH_FAV'})}}>
-            <CatOption value={1}>Wild</CatOption>
-            <CatOption value={2}>Uproarious</CatOption>
-            <CatOption value={3}>Hilarious</CatOption>
-            <CatOption value={4}>Skibidi</CatOption>
-            <CatOption value={5}>Whimsical</CatOption>
+  return(
+    <Container>
+      <h1>Favorite Gifs</h1>
+      <Dropdown>
+        <DropDownTag value={sortCat} onChange={(event) => {
+          setRefresh(refresh + 1)
+          setSortCat(event.target.value)}}>
+          <CatOption value={0}>(No Sorting)</CatOption>
+          <CatOption value={1}>Wild</CatOption>
+          <CatOption value={2}>Uproarious</CatOption>
+          <CatOption value={3}>Hilarious</CatOption>
+          <CatOption value={4}>Skibidi</CatOption>
+          <CatOption value={5}>Whimsical</CatOption>
         </DropDownTag>
       </Dropdown>
-        </form>
-        <div>
-         <Button 
-         //onClick={removeGif}
-        > Remove Gif</Button>
-        </div>
-         </div>
-      ))} 
-    
+
+      <div className="favorites-container row">
+        {favoriteList.filter((favorite)=>Number(sortCat) === Number(favorite.category) || Number(sortCat) === 0).map((favorite) => (
+          <div key={favorite.id} className='favImages col-md-4'>
+            <GifImage src={favorite.gif} />
+            <form>
+              <Dropdown>
+                <DropDownTag value={favorite.category} onChange={(event) => {
+                  setRefresh(refresh + 1)
+                  dispatch({type: 'SET_CAT', payload:{id: favorite.id, type: event.target.value}})
+                  dispatch({type: 'FETCH_FAV'})}}>
+                  <CatOption value={1}>Wild</CatOption>
+                  <CatOption value={2}>Uproarious</CatOption>
+                  <CatOption value={3}>Hilarious</CatOption>
+                  <CatOption value={4}>Skibidi</CatOption>
+                  <CatOption value={5}>Whimsical</CatOption>
+                </DropDownTag>
+              </Dropdown>
+            </form>
+            <div>
+              <Button 
+              //onClick={removeGif}
+              > Remove Gif</Button>
+            </div>
+          </div>
+        ))}
       </div>
     </Container>
- )   
+  )   
 }
-    {/* <input type='checkbox' value='wild' name='category' /> wild
-        <input type='checkbox' value='uproarious' name='category' /> uproarious
-        <input type='checkbox' value='poignant' name='category' /> poignant
-        <input type='checkbox' value='skibidi' name='category' /> skibidi
-        <input type='checkbox' value='whimsical' name='category' /> whimsical */}
